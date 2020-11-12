@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <list>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ public:
         capacity = 0;
     }
     ~Battery() { //деструктор
-        printf("Объект удалён\n\n");
+        printf("Аккумулятор утилизирован.\n\n");
     }
 };
 
@@ -30,7 +31,7 @@ public:
         capacity = i.capacity;
     }
     ~Li_Ion() { //деструктор
-        printf("Литий-ионный аккумулятор утилизирован.");
+        printf("Литий-ионный аккумулятор утилизирован.\n\n");
     }
 };
 
@@ -49,7 +50,7 @@ public:
         capacity = c.capacity;
     }
     ~Ni_Cd() { //деструктор
-        printf("Никель-кадмиевый аккумулятор утилизирован.");
+        printf("Никель-кадмиевый аккумулятор утилизирован.\n\n");
     }
 };
 
@@ -68,13 +69,45 @@ public:
         capacity = m.capacity;
     }
     ~Ni_MH() { //деструктор
-        printf("Никель-металлогидридный аккумулятор утилизирован.");
+        printf("Никель-металлогидридный аккумулятор утилизирован.\n\n");
     }
 };
 
+class Storage { //класс-хранилище
+public:
+    int size; //размер хранилища
+    Battery **accumulator;
+    Storage() { //конструктор по умолчанию
+        
+    };
+    Storage(int size) { //конструктор с параметрами
+        this->size = size;
+        accumulator = new Battery *[size];
+        for (int i = 0; i < size; i++) { //заполнение массива-хранилища объектов "Аккумулятор" нулевыми показателями
+            accumulator[i] = NULL;
+        }
+    }
+    ~Storage() { //деструктор
 
+    }
+};
+
+Battery *randomBattery(int choose) { //случайный выбор аккумулятора
+    switch (choose) {
+    case 1:
+        return new Li_Ion;
+        break;
+    case 2:
+        return new Ni_Cd;
+        break;
+    case 3:
+        return new Ni_MH;
+        break;
+    }
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    setlocale(LC_ALL, "Russian");
+
 }

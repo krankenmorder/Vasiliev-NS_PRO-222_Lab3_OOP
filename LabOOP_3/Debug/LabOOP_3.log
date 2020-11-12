@@ -1,2 +1,3 @@
 ﻿  LabOOP_3.cpp
+E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(107): warning C4715: randomBattery: значение возвращается не при всех путях выполнения
   LabOOP_3.vcxproj -> E:\Labs\LabOOP_3\Debug\LabOOP_3.exe
