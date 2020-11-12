@@ -2,67 +2,73 @@
 
 using namespace std;
 
-class Battery {
+class Battery { //класс-предок "Аккумулятор"
 public:
-    string name;
-    int capacity;
-    Battery() {
-        name = " ";
+    string type; //атрибут "тип"
+    int capacity; //атрибут "ёмкость"
+    Battery() { //конструктор по умолчанию (обнуление значений)
+        type = "";
         capacity = 0;
     }
-    ~Battery() {
+    ~Battery() { //деструктор
         printf("Объект удалён\n\n");
     }
 };
 
-class Li_Ion : public Battery {
+class Li_Ion : public Battery { //класс-наследник "Литий-ионный"
 public:
-    Li_Ion() { 
-        name = "Li-Ion";
+    Li_Ion() { //конструктор по умолчанию
+        type = "Li-Ion";
         capacity = 0;
     }
-    Li_Ion(int capacity) {
+    Li_Ion(int capacity) { //конструктор с параметрами 
+        type = "Li-Ion";
         this->capacity = capacity;
     }
-    Li_Ion(Li_Ion& i) {
+    Li_Ion(Li_Ion& i) { //конструктор копирования
+        type = i.type;
         capacity = i.capacity;
     }
-    ~Li_Ion() {
-
+    ~Li_Ion() { //деструктор
+        printf("Литий-ионный аккумулятор утилизирован.");
     }
 };
 
-class Ni_Cd : public Battery {
+class Ni_Cd : public Battery { //класс-наследник "Никель-кадмиевый"
 public:
-    Ni_Cd() {
-        name = "Ni-Cd";
+    Ni_Cd() { //конструктор по умолчанию
+        type = "Ni-Cd";
         capacity = 0;
     }
-    Ni_Cd(int capacity) {
+    Ni_Cd(int capacity) { //конструктор с параметрами
+        type = "Ni-Cd";
         this->capacity = capacity;
     }
-    Ni_Cd(Ni_Cd &i) {
-        capacity = i.capacity;
+    Ni_Cd(Ni_Cd &c) { //конструктор копирования
+        type = c.type;
+        capacity = c.capacity;
     }
-    ~Ni_Cd() {
-
+    ~Ni_Cd() { //деструктор
+        printf("Никель-кадмиевый аккумулятор утилизирован.");
     }
 };
 
-class Ni_MH : public Battery {
+class Ni_MH : public Battery { //класс-наследник "Никель-металлогидридный"
 public:
-    Ni_MH() {
-        name = "Ni-MH";
+    Ni_MH() { //конструктор по умолчанию
+        type = "Ni-MH";
         capacity = 0;
     }
-    Ni_MH(int capacity) {
+    Ni_MH(int capacity) { //конструктор с параметрами
+        type = "Ni-MH";
         this->capacity = capacity;
     }
-    Ni_MH(Ni_MH &i) {
-        capacity = i.capacity;
+    Ni_MH(Ni_MH &m) { //конструктор копирования
+        type = m.type;
+        capacity = m.capacity;
     }
-    ~Ni_MH() {
-
+    ~Ni_MH() { //деструктор
+        printf("Никель-металлогидридный аккумулятор утилизирован.");
     }
 };
 
