@@ -1,6 +1,6 @@
 ﻿  LabOOP_3.cpp
-E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(188,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(244,9): warning C4102: menu: неиспользованная метка
-E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(243,13): warning C4101: question: неиспользованная локальная переменная
-E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(183): warning C4715: randomBattery: значение возвращается не при всех путях выполнения
+E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(187,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(247,9): warning C4102: menu: неиспользованная метка
+E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(246,13): warning C4101: question: неиспользованная локальная переменная
+E:\Labs\LabOOP_3\LabOOP_3\LabOOP_3.cpp(182): warning C4715: randomBattery: значение возвращается не при всех путях выполнения
   LabOOP_3.vcxproj -> E:\Labs\LabOOP_3\Debug\LabOOP_3.exe

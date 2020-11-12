@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include <list>
 #include <time.h>
 
 using namespace std;
@@ -190,6 +189,7 @@ int main()
     while (n != 100000) {
         int size = n / 3; //при каждом изменении параметра "действий" размер массива остаётся прежним
         Storage storage(size); //создаётся объект класса-хранилища Storage
+        unsigned int start_time = clock(); //запуск отсчёта времени
         for (int i = 0; i < n; i++) {
             int choose = 1 + rand() % 3; //случайный выбор типа аккумулятора
             int number = rand() % size; //случайный выбор элемента массива-хранилища
@@ -238,6 +238,9 @@ int main()
                 break;
             }
         }
+        unsigned int end_time = clock(); // конечное время
+        unsigned int search_time = end_time - start_time; // искомое время
+        cout << "\n\nВремя затраченное на данный проход цикла: " << (double)search_time / 1000 << " сек." << endl << endl;
         n *= 10;
         system("pause");
         int question;
