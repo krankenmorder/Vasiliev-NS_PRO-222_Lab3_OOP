@@ -13,7 +13,7 @@ public:
         capacity = 0;
     }
     ~Battery() { //деструктор
-        printf("Аккумулятор утилизирован.\n\n");
+        printf("Аккумулятор утилизирован.\n");
     }
     virtual void showParameters() {
         printf("Неопознанный аккумулятор.\n");
@@ -141,10 +141,31 @@ public:
         accumulator[index]->showParameters();
     }
 
-    void addCapacity(int index) {
+    void addCapacity(int index) { //добавление ёмкости
         accumulator[index]->addCapacity();
     }
 
+    int lengthStorage() { //подсчёт длины хранилища
+        int length = 0;
+        for (int i = 0; i < size; i++) {
+            if (!Empty(i)) {
+                length++;
+            }
+        }
+        return length;
+    }
+
+    void searchBattery() { //метод вывода хранилища на экран
+        for (int i = 0; i < size; i++) {
+            printf("%i) ", i);
+            if (Empty(i)) {
+                printf("Пустая ячейка.\n");
+            }
+            else {
+                Parameters(i);
+            }
+        }
+    }
 };
 
 Battery *randomBattery(int choose) {
@@ -194,7 +215,7 @@ int main()
                 break;
             case 3:
                 int variant = 1 + rand() % 2;
-                switch (variant) {
+                switch (variant) { //раздвоение на методы классов-наследников
                 case 1:
                     printf("Проверка параметров у аккумулятора на %i ячейке хранилища.\n", number);
                     if (!storage.Empty(number)) {
@@ -219,6 +240,11 @@ int main()
         }
         n *= 10;
         system("pause");
-
+        int question;
+    menu:
+        printf("\n\nКол-во элементов хранилища: %i.\n", storage.lengthStorage());
+        storage.searchBattery();
+        system("pause");
+        system("cls");
     }
 }
