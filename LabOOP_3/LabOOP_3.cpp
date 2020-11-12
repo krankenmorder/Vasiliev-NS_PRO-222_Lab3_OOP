@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <list>
+#include <time.h>
 
 using namespace std;
 
@@ -14,8 +15,11 @@ public:
     ~Battery() { //деструктор
         printf("Аккумулятор утилизирован.\n\n");
     }
-    void randomCapacity() {
-        capacity = rand() % 6300;
+    virtual void showParameters() {
+        printf("Неопознанный аккумулятор.\n");
+    }
+    virtual void addCapacity() {
+        printf("Неопознанный аккумулятор.\n");
     }
 };
 
@@ -23,7 +27,7 @@ class Li_Ion : public Battery { //класс-наследник "Литий-ио
 public:
     Li_Ion() { //конструктор по умолчанию
         type = "Li-Ion";
-        randomCapacity;
+        capacity = rand() % 6300;
     }
     Li_Ion(int capacity) { //конструктор с параметрами 
         type = "Li-Ion";
@@ -34,14 +38,14 @@ public:
         capacity = i.capacity;
     }
     ~Li_Ion() { //деструктор
-        printf("Литий-ионный аккумулятор утилизирован.\n\n");
+        printf("Литий-ионный аккумулятор утилизирован.\n");
     }
-    void addCapacityI() {
+    virtual void addCapacity() {
         capacity += 100;
-        printf("Ёмкость литий-ионного аккумулятора увеличена на 100.\n");
+        printf("Ёмкость литий-ионного аккумулятора увеличена на 100. Текущая ёмкость - %i.\n", capacity);
     }
     virtual void showParameters() {
-        printf("Это %s аккумулятор. Ёмкость = %i.", type,capacity);
+        printf("Это литий-ионный аккумулятор. Ёмкость = %i mAh.\n", capacity);
     }
 };
 
@@ -49,7 +53,7 @@ class Ni_Cd : public Battery { //класс-наследник "Никель-к�
 public:
     Ni_Cd() { //конструктор по умолчанию
         type = "Ni-Cd";
-        randomCapacity;
+        capacity = rand() % 4000;
     }
     Ni_Cd(int capacity) { //конструктор с параметрами
         type = "Ni-Cd";
@@ -60,14 +64,14 @@ public:
         capacity = c.capacity;
     }
     ~Ni_Cd() { //деструктор
-        printf("Никель-кадмиевый аккумулятор утилизирован.\n\n");
+        printf("Никель-кадмиевый аккумулятор утилизирован.\n");
     }
-    void addCapacityC() {
-        capacity += 100;
-        printf("Ёмкость никель-кадмиевого аккумулятора увеличена на 200.\n");
+    virtual void addCapacity() {
+        capacity += 200;
+        printf("Ёмкость никель-кадмиевого аккумулятора увеличена на 200. Текущая ёмкость - %i.\n", capacity);
     }
     virtual void showParameters() {
-        printf("Это %s аккумулятор. Ёмкость = %i.", type, capacity);
+        printf("Это никель-кадмиевый аккумулятор. Ёмкость = %i mAh.\n", capacity);
     }
 };
 
@@ -75,7 +79,7 @@ class Ni_MH : public Battery { //класс-наследник "Никель-м�
 public:
     Ni_MH() { //конструктор по умолчанию
         type = "Ni-MH";
-        randomCapacity;
+        capacity = rand() % 5100;
     }
     Ni_MH(int capacity) { //конструктор с параметрами
         type = "Ni-MH";
@@ -86,14 +90,14 @@ public:
         capacity = m.capacity;
     }
     ~Ni_MH() { //деструктор
-        printf("Никель-металлогидридный аккумулятор утилизирован.\n\n");
+        printf("Никель-металлогидридный аккумулятор утилизирован.\n");
     }
-    void addCapacityM() {
-        capacity += 100;
-        printf("Ёмкость никель-металлогидридного аккумулятора увеличена на 300.\n");
+    virtual void addCapacity() {
+        capacity += 300;
+        printf("Ёмкость никель-металлогидридного аккумулятора увеличена на 300. Текущая ёмкость - %i.\n", capacity);
     }
     virtual void showParameters() {
-        printf("Это %s аккумулятор. Ёмкость = %i.", type, capacity);
+        printf("Это никель-металлогидридный аккумулятор. Ёмкость = %i mAh.\n", capacity);
     }
 };
 
@@ -115,15 +119,16 @@ public:
 
     }
 
-    void addBattery() { //добавление аккумулятора в хранилище
-
+    void addBattery(int index, Battery *battery) { //добавление аккумулятора в хранилище
+        accumulator[index] = battery;
     }
 
-    void deleteBattery() { //удаление аккумулятора из хранилища
-
+    void deleteBattery(int index) { //удаление аккумулятора из хранилища
+        delete accumulator[index];
+        accumulator[index] = NULL;
     }
 
-    bool empty(int index) {
+    bool Empty(int index) { //проверка наличия аккумулятора в хранилище
         if (accumulator[index] == NULL) {
             return true;
         }
@@ -132,11 +137,34 @@ public:
         }
     }
 
+    void Parameters(int index) { //вывод атрибутов аккумулятора
+        accumulator[index]->showParameters();
+    }
+
+    void addCapacity(int index) {
+        accumulator[index]->addCapacity();
+    }
+
 };
+
+Battery *randomBattery(int choose) {
+    switch (choose) {
+    case 1:
+        return new Li_Ion;
+        break;
+    case 2:
+        return new Ni_Cd;
+        break;
+    case 3:
+        return new Ni_MH;
+        break;
+    }
+}
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
+    srand(time(0));
     int n = 100; //количество действий
     while (n != 100000) {
         int size = n / 3; //при каждом изменении параметра "действий" размер массива остаётся прежним
@@ -148,16 +176,49 @@ int main()
             switch (choose) {
             case 1:
                 printf("Создание и добавление в [%i] ячейку хранилища нового аккумулятора...\n", number);
-
+                if (storage.Empty(number)) {
+                    storage.addBattery(number, randomBattery(1 + rand() % 3));
+                }
+                else {
+                    printf("Коллизия. Ячейка %i занята.\n", number);
+                }
                 break;
             case 2:
-
+                printf("Удаление из [%i] ячейки хранилища старого аккумулятора...\n", number);
+                if (!storage.Empty(number)) {
+                    storage.deleteBattery(number);
+                }
+                else {
+                    printf("Ячейка %i уже была пуста.\n", number);
+                }
                 break;
             case 3:
-
+                int variant = 1 + rand() % 2;
+                switch (variant) {
+                case 1:
+                    printf("Проверка параметров у аккумулятора на %i ячейке хранилища.\n", number);
+                    if (!storage.Empty(number)) {
+                        storage.Parameters(number);
+                    }
+                    else {
+                        printf("Ячейка %i оказалась пуста.\n", number);
+                    }
+                    break;
+                case 2:
+                    printf("Увеличение ёмкости аккумулятора на %i ячейке хранилища.\n", number);
+                    if (!storage.Empty(number)) {
+                        storage.addCapacity(number);
+                    }
+                    else {
+                        printf("Ячейка %i оказалась пуста.\n", number);
+                    }
+                    break;
+                }
                 break;
             }
         }
+        n *= 10;
+        system("pause");
 
     }
 }
